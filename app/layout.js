@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "OKR Generator",
-  description: "Generate and preview OKRs with objectives, key results, KPIs and reasoning",
+  description: "Generador de OKRs con objetivo, resultados clave, KPIs y razonamiento de Evolución Digital",
 };
 
 export default function RootLayout({ children }) {
