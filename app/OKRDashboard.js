@@ -26,13 +26,16 @@ export default function OKRDashboard({
   period = "",
   kr1 = { description: "", actual: 0, meta: 0, inicio: 0 },
   kr2 = { description: "", actual: 0, meta: 0, inicio: 0 },
+  kr3 = { description: "", actual: 0, meta: 0, inicio: 0 },
   kpis = [],
   reasoning = "",
 }) {
   const kr1Progress = progressPercent(kr1.actual, kr1.meta, kr1.inicio);
   const kr2Progress = progressPercent(kr2.actual, kr2.meta, kr2.inicio);
+  const kr3Progress = progressPercent(kr3.actual, kr3.meta, kr3.inicio);
   const kr1Status = progressStatus(kr1Progress);
   const kr2Status = progressStatus(kr2Progress);
+  const kr3Status = progressStatus(kr3Progress);
 
   return (
     <div className={styles.dashboard}>
@@ -97,9 +100,38 @@ export default function OKRDashboard({
             </p>
           </div>
         </div>
+        <div className={styles.cardKR}>
+          <div className={styles.cardLabel}>
+            <span className={`${styles.statusDot} ${styles[`statusDot${kr3Status.charAt(0).toUpperCase() + kr3Status.slice(1)}`]}`} aria-hidden />
+            RESULTADO CLAVE 3
+          </div>
+          <p className={styles.krDescription}>{kr3.description || "—"}</p>
+          <div className={styles.progressBlock}>
+            <span>Progreso</span>
+            <div className={styles.progressWrap}>
+              <div className={styles.progressTrack}>
+                <div
+                  className={`${styles.progressBar} ${styles[`progressBarStatus${kr3Status.charAt(0).toUpperCase() + kr3Status.slice(1)}`]}`}
+                  style={{ width: `${kr3Progress}%` }}
+                />
+              </div>
+              <span className={`${styles.progressPct} ${styles[`progressPctStatus${kr3Status.charAt(0).toUpperCase() + kr3Status.slice(1)}`]}`}>{kr3Progress}%</span>
+            </div>
+            <p className={styles.metaLine}>
+              Actual: {kr3.actual} · Meta: {kr3.meta} · Inicio: {kr3.inicio}
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className={styles.kpiCards}>
+      <div className={styles.kpiSection}>
+        <div className={styles.kpiSectionLabel}>
+          <span className={styles.kpiSectionIcon} aria-hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </span>
+          KPIs (Indicadores clave de rendimiento)
+        </div>
+        <div className={styles.kpiCards}>
         {(kpis.length ? kpis : [{ title: "", value: "", trend: "" }, { title: "", value: "", trend: "" }, { title: "", value: "", trend: "" }]).slice(0, 3).map((kpi, i) => {
           const t = (kpi.trend || "").trim();
           const trendUp = t.startsWith("↑");
@@ -119,6 +151,7 @@ export default function OKRDashboard({
             </div>
           );
         })}
+        </div>
       </div>
 
       <div className={styles.cardReasoning}>
